@@ -1,0 +1,45 @@
+INPUT (tokenize()):
+
+
+function tokenize(input) {
+  const tokens = [];
+  let i = 0;
+
+  // Checks over each character in the input string
+  while (i < input.length) {
+    const char = input[i];
+
+    // 1st check(SPACES): if the character is a whitespace, skip it
+    if (/\s/.test(char)) { 
+        i++; 
+        continue; 
+    }
+
+    // 2nd check (NUMBER): if the character is a digit, read the full number
+    if (/[0-9]/.test(char)) {
+      let num = "";
+      while (/[0-9]/.test(input[i])) {
+        num += input[i]; i++;
+      }
+      tokens.push({type:"NUMBER", value:Number(num)});
+      continue;
+    }
+
+    // 3rd check(OPERATOR): if the character is a plus sign, add a PLUS token
+    if (char === ">") {
+      tokens.push({type:"GT"}); i++; continue;
+    }
+    i++;
+  }
+  return tokens;
+}
+
+console.log(tokenize("3 > 2"));
+
+
+OUTPUT:
+[
+  { type: 'NUMBER', value: 3 },
+  { type: 'GT' },
+  { type: 'NUMBER', value: 2 }
+]
